@@ -6,6 +6,9 @@ defmodule Exseed.Mixfile do
      version: "0.0.1",
      elixir: "~> 1.0",
      package: package,
+     description: """
+     A library that provides a simple DSL for seeding databases through Ecto.
+     """
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
@@ -18,7 +21,7 @@ defmodule Exseed.Mixfile do
   defp package do
     [contributors: ["Sean Eshbaugh"],
      licenses: ["MIT"],
-     links: %{"GitHub" => ""}]
+     links: %{"GitHub" => "https://github.com/seaneshbaugh/exseed"}]
   end
 
   defp deps do
