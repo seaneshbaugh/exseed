@@ -8,7 +8,7 @@ defmodule Exseed.Mixfile do
      package: package,
      description: """
      A library that provides a simple DSL for seeding databases through Ecto.
-     """
+     """,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps]
