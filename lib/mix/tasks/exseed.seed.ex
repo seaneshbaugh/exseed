@@ -1,5 +1,6 @@
 defmodule Mix.Tasks.Exseed.Seed do
   use Mix.Task
+  import Supervisor.Spec, warn: false
   import Mix.Ecto
 
   @shortdoc "Seed the database."
@@ -21,6 +22,8 @@ defmodule Mix.Tasks.Exseed.Seed do
     repo = parse_repo(args)
 
     ensure_repo(repo)
+
+    Mix.Task.run "app.start", args
 
     {opts, _, _} = OptionParser.parse args, switches: [quiet: :boolean, path: :string]
 
