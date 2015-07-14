@@ -3,7 +3,7 @@ defmodule Exseed.Mixfile do
 
   def project do
     [app: :exseed,
-     version: "0.0.1",
+     version: "0.0.2",
      elixir: "~> 1.0",
      package: package,
      description: """
