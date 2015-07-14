@@ -7,7 +7,7 @@ defmodule Exseed do
 
       seed_struct = struct(unquote(model), var!(attributes, Exseed))
 
-      Application.get_env(:exseed, :repo).insert(seed_struct)
+      Application.get_env(:exseed, :repo).insert!(seed_struct)
 
       seed_struct
     end
