@@ -8,9 +8,11 @@ Inspired largely by [seed-fu](https://github.com/mbleigh/seed-fu).
 
 In your project's `mix.exs` add the following:
 
+```elixir
     defp deps do
       {:exseed, "~> 0.0.1"}
     end
+```
 
 and then run `mix deps.get`.
 
@@ -18,7 +20,9 @@ and then run `mix deps.get`.
 
 In `config/config.exs` add:
 
+```elixir
     config :exseed, :repo, YourApplication.Repo
+```
 
 ## Usage
 
@@ -26,6 +30,7 @@ Exseed provides a `seed` macro which expects an Ecto model and a block. Inside t
 
 By default Exseed will look in your project's `priv/repo/seeds/` directory for seed files to load. Let's say you have a model named Post, you could put the following in `priv/repo/seeds/posts.exs`:
 
+```elixir
     import Exseed
 
     seed YourApplication.Post do
@@ -45,3 +50,4 @@ By default Exseed will look in your project's `priv/repo/seeds/` directory for s
 
       body "This entry was seeded at #{year}-#{month}-#{day} #{hour}:#{minute}:#{second}."
     end
+```
