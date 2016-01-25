@@ -26,7 +26,7 @@ defmodule Exseed.Mixfile do
 
   defp deps do
     [
-     { :ecto, ">= 0.10.0" },
+     { :ecto, ">= 1.0.0" },
     ]
   end
 end

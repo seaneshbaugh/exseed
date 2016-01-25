@@ -21,7 +21,7 @@ defmodule Mix.Tasks.Exseed.Seed do
   def run(args) do
     repo = parse_repo(args)
 
-    ensure_repo(repo)
+    ensure_repo(repo, [])
 
     Mix.Task.run "app.start", args
 
