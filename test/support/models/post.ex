@@ -1,5 +1,5 @@
 defmodule ExseedTest.Post do
-  use Ecto.Model
+  use Ecto.Schema
 
   schema "posts" do
     field :title, :string, default: ""

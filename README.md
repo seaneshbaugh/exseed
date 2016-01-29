@@ -10,7 +10,7 @@ In your project's `mix.exs` add the following:
 
 ```elixir
     defp deps do
-      {:exseed, "~> 0.0.1"}
+      {:exseed, "~> 0.0.3"}
     end
 ```
 

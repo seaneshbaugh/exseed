@@ -1,10 +1,5 @@
 defmodule Mix.Tasks.Exseed.Seed do
-  use Mix.Task
-  import Supervisor.Spec, warn: false
-  import Mix.Ecto
-
-  @shortdoc "Seed the database."
-  @moduledoc """
+  @moduledoc ~S"""
   Seed the database from seed files.
 
   ## Examples
@@ -17,6 +12,10 @@ defmodule Mix.Tasks.Exseed.Seed do
     * `--path` - the path to the seed files (defaults to `priv/repo/seeds/`)
     * `--quiet` - don't display any non-error output.
   """
+
+  use Mix.Task
+  import Supervisor.Spec, warn: false
+  import Mix.Ecto
 
   def run(args) do
     repo = parse_repo(args)
@@ -35,7 +34,7 @@ defmodule Mix.Tasks.Exseed.Seed do
 
     {:ok, seed_files} = File.ls(seed_path)
 
-    seed_files |> Enum.each &(Code.load_file(Path.join(seed_path, &1)))
+    seed_files |> Enum.each(&(Code.load_file(Path.join(seed_path, &1))))
 
     unless opts[:quiet] do
       Mix.shell.info "The database for #{inspect repo} has been seeded."

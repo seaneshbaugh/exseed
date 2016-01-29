@@ -1,13 +1,13 @@
-Code.require_file "support/mock_repo.exs", __DIR__
+Code.require_file "../support/test_repo.exs", __DIR__
 
-Code.require_file "support/models/post.ex", __DIR__
+Code.require_file "../support/models/post.ex", __DIR__
 
 defmodule ExseedTest do
   use ExUnit.Case, async: true
 
-  require Exseed.MockRepo, as: MockRepo
+  require Exseed.TestRepo, as: TestRepo
 
-  Application.put_env :exseed, :repo, MockRepo
+  Application.put_env :exseed, :repo, TestRepo
 
   import Exseed
 
