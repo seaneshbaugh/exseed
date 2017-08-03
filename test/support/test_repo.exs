@@ -57,13 +57,13 @@ defmodule Exseed.TestAdapter do
   def insert(repo, model_meta, fields, {key, :id, nil}, return, opts),
     do: insert(repo, model_meta, fields, nil, [key|return], opts)
   def insert(_repo, %{context: nil}, _fields, _autogen, return, _opts),
-    do: send(self, :insert) && {:ok, Enum.zip(return, 1..length(return))}
+    do: send(self(), :insert) && {:ok, Enum.zip(return, 1..length(return))}
   def insert(_repo, %{context: {:invalid, _}=res}, _fields, _autogen, _return, _opts),
     do: res
 
   # Notice the list of changes is never empty.
   def update(_repo, %{context: nil}, [_|_], _filters, _autogen, return, _opts),
-    do: send(self, :update) && {:ok, Enum.zip(return, 1..length(return))}
+    do: send(self(), :update) && {:ok, Enum.zip(return, 1..length(return))}
   def update(_repo, %{context: {:invalid, _}=res}, [_|_], _filters, _autogen, _return, _opts),
     do: res
 
@@ -74,7 +74,7 @@ defmodule Exseed.TestAdapter do
 
   def transaction(_repo, _opts, fun) do
     # Makes transactions "trackable" in tests
-    send self, {:transaction, fun}
+    send self(), {:transaction, fun}
     try do
       {:ok, fun.()}
     catch
@@ -84,7 +84,7 @@ defmodule Exseed.TestAdapter do
   end
 
   def rollback(_repo, value) do
-    send self, {:rollback, value}
+    send self(), {:rollback, value}
     throw {:ecto_rollback, value}
   end
 

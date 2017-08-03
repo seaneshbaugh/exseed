@@ -68,7 +68,7 @@ defmodule Exseed do
   """
   defmacro attr(attribute, value) do
     quote do
-      var!(attributes, Exseed) = Dict.put(var!(attributes, Exseed), unquote(attribute), unquote(value))
+      var!(attributes, Exseed) = Map.put(var!(attributes, Exseed), unquote(attribute), unquote(value))
     end
   end
 
