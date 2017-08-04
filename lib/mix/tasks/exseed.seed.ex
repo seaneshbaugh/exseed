@@ -18,26 +18,28 @@ defmodule Mix.Tasks.Exseed.Seed do
   import Mix.Ecto
 
   def run(args) do
-    repo = parse_repo(args)
+    repos = parse_repo(args)
 
-    ensure_repo(repo, [])
+    Enum.each repos, fn repo ->
+      ensure_repo(repo, [])
 
-    Mix.Task.run "app.start", args
+      Mix.Task.run "app.start", args
 
-    {opts, _, _} = OptionParser.parse args, switches: [quiet: :boolean, path: :string]
+      {opts, _, _} = OptionParser.parse args, switches: [quiet: :boolean, path: :string]
 
-    seed_path = opts[:path] || "priv/repo/seeds/"
+      seed_path = opts[:path] || "priv/repo/seeds/"
 
-    unless File.exists?(seed_path) do
-      raise File.Error, reason: :enoent, action: "find", path: seed_path
-    end
+      unless File.exists?(seed_path) do
+        raise File.Error, reason: :enoent, action: "find", path: seed_path
+      end
 
-    {:ok, seed_files} = File.ls(seed_path)
+      seed_files = Path.wildcard("#{seed_path}/*.exs")
 
-    seed_files |> Enum.each(&(Code.load_file(Path.join(seed_path, &1))))
+      seed_files |> Enum.each(&(Code.load_file(&1)))
 
-    unless opts[:quiet] do
-      Mix.shell.info "The database for #{inspect repo} has been seeded."
+      unless opts[:quiet] do
+        Mix.shell.info "The database for #{inspect repo} has been seeded."
+      end
     end
   end
 end
