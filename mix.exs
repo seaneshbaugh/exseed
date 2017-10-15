@@ -25,7 +25,7 @@ defmodule Exseed.Mixfile do
   defp deps do
     [
       { :earmark, "~> 0.2", only: :dev },
-      { :ecto, ">= 1.0.0" },
+      { :ecto, ">= 1.1.0" },
       { :ex_doc, "~> 0.11", only: :dev }
     ]
   end

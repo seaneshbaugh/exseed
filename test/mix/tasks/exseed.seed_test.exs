@@ -12,6 +12,6 @@ defmodule Mix.Tasks.Exseed.SeedTest do
   test "runs the seed task" do
     Seed.run ["-r", to_string(TestRepo), "--path", "test/support/seeds"]
 
-    assert_received {:mix_shell, :info, ["The database for [Exseed.TestRepo] has been seeded."]}
+    assert_received {:mix_shell, :info, ["The database for Exseed.TestRepo has been seeded."]}
   end
 end
