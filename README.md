@@ -4,6 +4,8 @@ An Elixir library that provides a simple DSL for seeding databases through Ecto.
 
 Inspired largely by [seed-fu](https://github.com/mbleigh/seed-fu).
 
+[![CircleCI](https://circleci.com/gh/seaneshbaugh/exseed/tree/master.svg?style=svg)](https://circleci.com/gh/seaneshbaugh/exseed/tree/master)
+
 ## Installation
 
 In your project's `mix.exs` add the following:
