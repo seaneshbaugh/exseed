@@ -1,7 +1,7 @@
 defmodule Exseed.Mixfile do
   use Mix.Project
 
-  @version "0.0.4"
+  @version "0.1.0"
 
   def project do
     [app: :exseed,
@@ -24,9 +24,9 @@ defmodule Exseed.Mixfile do
 
   defp deps do
     [
-      { :earmark, "~> 0.2", only: :dev },
-      { :ecto, ">= 1.0.0" },
-      { :ex_doc, "~> 0.11", only: :dev }
+      { :earmark, "~> 1.3.1", only: :dev },
+      { :ecto, ">= 3.0.0" },
+      { :ex_doc, "~> 0.19.3", only: :dev }
     ]
   end
 
