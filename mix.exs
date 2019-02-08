@@ -4,18 +4,22 @@ defmodule Exseed.Mixfile do
   @version "0.1.0"
 
   def project do
-    [app: :exseed,
-     version: @version,
-     elixir: "~> 1.0",
-     deps: deps(),
-     test_paths: test_paths(Mix.env),
-     description: description(),
-     package: package(),
-     name: "Exseed",
-     docs: [source_ref: "v#{@version}", main: "Exseed",
-            source_url: "https://github.com/seaneshbaugh/exseed"],
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod]
+    [
+      app: :exseed,
+      version: @version,
+      elixir: "~> 1.0",
+      deps: deps(),
+      test_paths: test_paths(Mix.env),
+      description: description(),
+      package: package(),
+      name: "Exseed",
+      docs: [
+        source_ref: "v#{@version}", main: "Exseed",
+        source_url: "https://github.com/seaneshbaugh/exseed"
+      ],
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod
+    ]
   end
 
   def application do
@@ -37,9 +41,11 @@ defmodule Exseed.Mixfile do
   end
 
   defp package do
-    [maintainers: ["Sean Eshbaugh"],
-     licenses: ["MIT"],
-     links: %{"GitHub" => "https://github.com/seaneshbaugh/exseed"}]
+    [
+      maintainers: ["Sean Eshbaugh"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/seaneshbaugh/exseed"}
+    ]
   end
 
   defp test_paths(_) do
