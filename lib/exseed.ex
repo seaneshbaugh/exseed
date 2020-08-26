@@ -55,7 +55,7 @@ defmodule Exseed do
       # reverted in the future.
       changeset = Map.put(Ecto.Changeset.change(seed_struct), :prepare, [])
 
-      Application.get_env(:exseed, :repo).insert!(changeset)
+      Application.get_env(:exseed, :repo).insert(changeset)
 
       seed_struct
     end

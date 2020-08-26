@@ -1,4 +1,4 @@
-Code.require_file "../support/test_repo.exs", __DIR__
+#Code.require_file "../support/test_repo.exs", __DIR__
 
 Code.require_file "../support/models/post.ex", __DIR__
 

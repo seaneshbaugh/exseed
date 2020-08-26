@@ -30,6 +30,7 @@ defmodule Exseed.Mixfile do
     [
       { :earmark, "~> 1.3.1", only: :dev },
       { :ecto, ">= 3.0.0" },
+      { :ecto_sql, ">= 3.0.0" },
       { :ex_doc, "~> 0.19.3", only: :dev }
     ]
   end
