@@ -1,0 +1,5 @@
+ExUnit.start()
+Mix.shell(Mix.Shell.Process)
+Code.require_file("support/test_repo.exs", __DIR__)
+Code.require_file("support/models/post.ex", __DIR__)
+Application.put_env(:exseed, :repo, Exseed.TestRepo)

@@ -1,9 +1,9 @@
 import Exseed
 
 seed ExseedTest.Post do
-  id 1
+  id(1)
 
-  title "LOL"
+  title("LOL")
 
-  body "ROFL"
+  body("ROFL")
 end

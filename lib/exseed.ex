@@ -12,9 +12,9 @@ defmodule Exseed do
 
   ## Usage
 
-  Exseed provides a `seed` macro which expects an Ecto model and a block. Inside the block the fields on your model will be available as functions which will set the value for the field for that record.
+  Exseed provides a `seed` macro which expects an Ecto schema and a block. Inside the block the fields on your schema will be available as functions which will set the value for the field for that record.
 
-  By default Exseed will look in your project's `priv/repo/seeds/` directory for seed files to load. Let's say you have a model named Post, you could put the following in `priv/repo/seeds/posts.exs`:
+  By default Exseed will look in your project's `priv/repo/seeds/` directory for seed files to load. Let's say you have a schema named Post, you could put the following in `priv/repo/seeds/posts.exs`:
 
   ```elixir
       import Exseed
@@ -40,51 +40,51 @@ defmodule Exseed do
   """
 
   @doc """
-  Creates a new record in the repo for a given model.
+  Inserts a record for an Ecto schema and returns the persisted struct.
   """
   defmacro seed(model, do: block) do
+    schema = Macro.expand(model, __CALLER__)
+
+    fields =
+      schema.__schema__(:fields) ++
+        schema.__schema__(:virtual_fields) ++
+        schema.__schema__(:associations) ++ schema.__schema__(:embeds)
+
+    block = Macro.postwalk(block, &postwalk(&1, fields))
+
     quote do
       var!(attributes, Exseed) = %{}
 
-      unquote(Macro.postwalk(block, &postwalk(&1, model)))
+      unquote(block)
 
-      seed_struct = struct(unquote(model), var!(attributes, Exseed))
+      seed_struct = struct!(unquote(schema), var!(attributes, Exseed))
+      repo = Application.fetch_env!(:exseed, :repo)
 
-      # For some reason version 1.1.3 of Ecto requires the prepare key to be present in the changeset for Ecto.Repo.Schema.do_insert/4.
-      # But, Ecto.Changeset.change/1 does not add it. It looks like the master branch of Ecto removes this requirement so this can be
-      # reverted in the future.
-      changeset = Map.put(Ecto.Changeset.change(seed_struct), :prepare, [])
-
-      Application.get_env(:exseed, :repo).insert!(changeset)
-
-      seed_struct
+      repo.insert!(Ecto.Changeset.change(seed_struct))
     end
   end
 
   @doc """
-  Sets the value for a model's attribute.
+  Sets the value for a schema's attribute.
 
    Rather than call `attr` directly the name of the attribute should be used instead.
   """
   defmacro attr(attribute, value) do
     quote do
-      var!(attributes, Exseed) = Map.put(var!(attributes, Exseed), unquote(attribute), unquote(value))
+      var!(attributes, Exseed) =
+        Map.put(var!(attributes, Exseed), unquote(attribute), unquote(value))
     end
   end
 
-  defp postwalk({attribute, _meta, [value]} = ast, {_, _, model}) do
-    attributes = struct(Module.concat(model), %{}) |> Map.keys |> Enum.reject(fn key -> key in [:__meta__, :__struct__] end)
-
-    if attribute in attributes do
+  defp postwalk({attribute, _meta, [value]} = ast, fields) when is_atom(attribute) do
+    if attribute in fields do
       quote do
-        attr(unquote(attribute), unquote(value))
+        Exseed.attr(unquote(attribute), unquote(value))
       end
     else
       ast
     end
   end
 
-  defp postwalk(ast, _model) do
-    ast
-  end
+  defp postwalk(ast, _fields), do: ast
 end
